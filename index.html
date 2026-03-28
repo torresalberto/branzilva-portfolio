@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>brand silva</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Artist portfolio featuring ink drawings, watercolor illustrations, and cosmic artworks by Brand Silva (@branzilva)">
+  <meta name="keywords" content="Brand Silva, artist, illustrator, ink drawings, watercolor, cosmic art, Mexican artist, @branzilva">
+  <meta name="author" content="Brand Silva">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://branzilva.com/">
+  <meta property="og:title" content="brand silva">
+  <meta property="og:description" content="Artist portfolio featuring ink drawings, watercolor illustrations, and cosmic artworks">
+  <meta property="og:image" content="https://branzilva.com/images/art/018_branzilva_1774669910242.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://branzilva.com/">
+  <meta property="twitter:title" content="brand silva">
+  <meta property="twitter:description" content="Artist portfolio featuring ink drawings, watercolor illustrations, and cosmic artworks">
+  <meta property="twitter:image" content="https://branzilva.com/images/art/018_branzilva_1774669910242.jpg">
+  
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VisualArtwork",
+    "name": "brand silva",
+    "description": "Artist portfolio featuring ink drawings, watercolor illustrations, and cosmic artworks",
+    "url": "https://branzilva.com/",
+    "image": "https://branzilva.com/images/art/018_branzilva_1774669910242.jpg",
+    "creator": {
+      "@type": "Person",
+      "name": "Brand Silva",
+      "sameAs": [
+        "https://instagram.com/branzilva"
+      ]
+    }
+  }
+  </script>
+  
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+</head>
+<body>
+  <canvas id="ink-canvas"></canvas>
+  
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous">&#8249;</button>
+    <button class="lightbox-nav lightbox-next" aria-label="Next">&#8250;</button>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+    </div>
+    <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">1</span></div>
+  </div>
+  
+  <div class="scroll-container">
+    <!-- Section 1: Artist Name - The Sketch -->
+    <section class="section section-sketch" data-mode="ink">
+      <div class="name-container">
+        <svg class="name-svg" viewBox="0 0 800 200">
+          <path class="name-path" d="M50,100 Q100,50 150,100 T250,100 Q300,150 350,100 T450,100 M400,100 Q450,50 500,100" />
+          <path class="name-path" d="M520,80 Q570,30 620,80 T720,80" />
+          <path class="name-path" d="M550,100 Q600,150 650,100 T750,100" />
+        </svg>
+        <div class="name-text">brand silva</div>
+      </div>
+      <div class="scroll-indicator">
+        <svg viewBox="0 0 100 100" class="scroll-line">
+          <line x1="50" y1="10" x2="50" y2="90" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 2: The Works -->
+    <section class="section section-works" data-mode="wash">
+      <div class="works-container">
+        <h2 class="works-title">
+          <span class="letter">t</span>
+          <span class="letter">h</span>
+          <span class="letter">e</span>
+          <span class="letter">&nbsp;</span>
+          <span class="letter">w</span>
+          <span class="letter">o</span>
+          <span class="letter">r</span>
+          <span class="letter">k</span>
+          <span class="letter">s</span>
+        </h2>
+        
+        <div class="artwork-grid" id="artwork-grid">
+          <!-- Artworks will be dynamically inserted -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: More Works (Polaroid Style) -->
+    <section class="section section-instagram" data-mode="glow">
+      <div class="instagram-container">
+        <div class="polaroid-frame">
+          <div class="polaroid-inner">
+            <div class="photo-area" id="insta-feed">
+              <!-- Polaroid images will be dynamically inserted -->
+            </div>
+          </div>
+        </div>
+        <a href="https://instagram.com/branzilva" target="_blank" class="insta-handle">
+          <span>@</span>branzilva
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 4: Contact -->
+    <section class="section section-contact" data-mode="glow">
+      <div class="contact-container">
+        <div class="contact-image">
+          <img src="images/art/033_branzilva_1774669914365.jpg" alt="Contact">
+        </div>
+        <div class="contact-content">
+          <a href="https://instagram.com/branzilva" target="_blank" class="contact-button">
+            <span class="button-text">send a message</span>
+            <span class="button-line"></span>
+          </a>
+        </div>
+        <div class="attribution">built by <a href="https://albto.me" target="_blank">albto.me</a></div>
+      </div>
+    </section>
+
+    <!-- Floating line decorations -->
+    <div class="floating-lines" id="floating-lines"></div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,921 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --ink-color: #1a1a1a;
+  --paper-color: #f5f0e6;
+  --wash-color: #e07a5f;
+  --glow-color: #00d4ff;
+  --transition-speed: 0.8s;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background: var(--paper-color);
+  color: var(--ink-color);
+  overflow-x: hidden;
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+/* Mode: Ink (top of page) */
+body.mode-ink {
+  --ink-color: #1a1a1a;
+  --paper-color: #f5f0e6;
+}
+
+body.mode-wash {
+  --ink-color: #c94e50;
+  --paper-color: #faf3e8;
+}
+
+body.mode-glow {
+  --ink-color: #ffffff;
+  --paper-color: #0a0a12;
+}
+
+/* Ink Canvas */
+#ink-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Scroll Container */
+.scroll-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sections */
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  transition: background var(--transition-speed);
+}
+
+/* Section 1: Sketch Mode */
+.section-sketch {
+  background: var(--paper-color);
+}
+
+.name-container {
+  position: relative;
+  text-align: center;
+}
+
+.name-svg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.name-path {
+  fill: none;
+  stroke: var(--ink-color);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 3s ease forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.name-text {
+  font-size: clamp(2rem, 8vw, 6rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--ink-color);
+  opacity: 0;
+  animation: fadeIn 1s ease 2.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  animation: bounce 2s ease infinite;
+}
+
+.scroll-line {
+  width: 2px;
+  height: 60px;
+  stroke: var(--ink-color);
+  stroke-width: 2;
+}
+
+.scroll-line line {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: scrollDraw 2s ease infinite;
+}
+
+@keyframes scrollDraw {
+  0%, 100% { stroke-dashoffset: 60; }
+  50% { stroke-dashoffset: 0; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Section 2: Works */
+.section-works {
+  background: linear-gradient(180deg, var(--paper-color) 0%, var(--paper-color) 100%);
+}
+
+.works-container {
+  max-width: 1400px;
+  width: 100%;
+}
+
+.works-title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.1em;
+}
+
+.works-title .letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: letterReveal 0.5s ease forwards;
+}
+
+.works-title .letter:nth-child(1) { animation-delay: 0.1s; }
+.works-title .letter:nth-child(2) { animation-delay: 0.15s; }
+.works-title .letter:nth-child(3) { animation-delay: 0.2s; }
+.works-title .letter:nth-child(4) { animation-delay: 0.25s; }
+.works-title .letter:nth-child(5) { animation-delay: 0.3s; }
+.works-title .letter:nth-child(6) { animation-delay: 0.35s; }
+.works-title .letter:nth-child(7) { animation-delay: 0.4s; }
+.works-title .letter:nth-child(8) { animation-delay: 0.45s; }
+
+@keyframes letterReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Artwork Grid */
+.artwork-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.artwork-card {
+  position: relative;
+  aspect-ratio: 1;
+  background: rgba(0,0,0,0.03);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: cardReveal 0.6s ease forwards;
+}
+
+.artwork-card:nth-child(1) { animation-delay: 0.5s; }
+.artwork-card:nth-child(2) { animation-delay: 0.6s; }
+.artwork-card:nth-child(3) { animation-delay: 0.7s; }
+.artwork-card:nth-child(4) { animation-delay: 0.8s; }
+.artwork-card:nth-child(5) { animation-delay: 0.9s; }
+.artwork-card:nth-child(6) { animation-delay: 1.0s; }
+
+@keyframes cardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.artwork-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ink-color);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.artwork-card:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.artwork-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(20%);
+  transition: all 0.6s ease;
+}
+
+.artwork-card:hover img {
+  filter: sepia(0%);
+  transform: scale(1.05);
+}
+
+/* Line decoration around card */
+.artwork-card::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid var(--ink-color);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.artwork-card:hover::after {
+  opacity: 0.3;
+}
+
+/* Section 3: Instagram */
+.section-instagram {
+  background: var(--paper-color);
+}
+
+.instagram-container {
+  text-align: center;
+}
+
+.polaroid-frame {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  transform: rotate(-2deg);
+  max-width: 90vw;
+  margin-bottom: 3rem;
+}
+
+.polaroid-inner {
+  background: #f0f0f0;
+  padding: 0.5rem;
+}
+
+.photo-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.photo-area img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  opacity: 0;
+  animation: photoFade 0.5s ease forwards;
+}
+
+.photo-area img:nth-child(1) { animation-delay: 0.2s; }
+.photo-area img:nth-child(2) { animation-delay: 0.3s; }
+.photo-area img:nth-child(3) { animation-delay: 0.4s; }
+.photo-area img:nth-child(4) { animation-delay: 0.5s; }
+.photo-area img:nth-child(5) { animation-delay: 0.6s; }
+.photo-area img:nth-child(6) { animation-delay: 0.7s; }
+.photo-area img:nth-child(7) { animation-delay: 0.8s; }
+.photo-area img:nth-child(8) { animation-delay: 0.9s; }
+.photo-area img:nth-child(9) { animation-delay: 1.0s; }
+
+@keyframes photoFade {
+  to {
+    opacity: 1;
+  }
+}
+
+.insta-handle {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--ink-color);
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  position: relative;
+}
+
+.insta-handle::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ink-color);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+
+.insta-handle:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.insta-handle span {
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+/* Section 4: Contact */
+.section-contact {
+  background: var(--paper-color);
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.contact-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--ink-color);
+  opacity: 0;
+  animation: contactReveal 1s ease 0.5s forwards;
+}
+
+@keyframes contactReveal {
+  to {
+    opacity: 1;
+  }
+}
+
+.contact-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-content {
+  text-align: center;
+}
+
+.contact-button {
+  display: inline-block;
+  position: relative;
+  padding: 1rem 3rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--ink-color);
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  overflow: hidden;
+}
+
+.contact-button .button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-button .button-line {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--glow-color);
+  transform: translateX(-50%);
+  transition: width 0.4s ease;
+}
+
+.contact-button:hover .button-line {
+  width: calc(100% - 6rem);
+}
+
+.contact-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ink-color);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.4s ease;
+}
+
+.contact-button:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.attribution {
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  opacity: 0.4;
+  letter-spacing: 0.1em;
+}
+
+.attribution a {
+  color: var(--ink-color);
+  text-decoration: none;
+}
+
+.attribution a:hover {
+  text-decoration: underline;
+}
+
+/* Floating Lines */
+.floating-lines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-line {
+  position: absolute;
+  background: var(--ink-color);
+  opacity: 0.1;
+  border-radius: 2px;
+  transition: opacity 0.3s ease;
+}
+
+.floating-line.active {
+  opacity: 0.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .artwork-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .photo-area {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   LIGHTBOX - Fullscreen Artwork Viewer
+   ============================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 85vh;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease 0.1s;
+}
+
+.lightbox.active .lightbox-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 3rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  line-height: 1;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 4rem;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  padding: 20px;
+  line-height: 1;
+}
+
+.lightbox-nav:hover {
+  opacity: 1;
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-prev:hover { transform: translateY(-50%) translateX(-5px); }
+
+.lightbox-next { right: 20px; }
+.lightbox-next:hover { transform: translateY(-50%) translateX(5px); }
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+}
+
+/* ============================================
+   ENHANCED ARTWORK HOVER
+   ============================================ */
+.artwork-card {
+  position: relative;
+  aspect-ratio: 1;
+  background: rgba(0,0,0,0.03);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: cardReveal 0.6s ease forwards;
+}
+
+.artwork-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ink-color);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.artwork-card:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.artwork-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(20%);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.artwork-card:hover img {
+  filter: sepia(0%);
+  transform: scale(1.08);
+}
+
+/* Artwork number on hover */
+.artwork-card::after {
+  content: attr(data-index);
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  font-size: 0.7rem;
+  color: var(--ink-color);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 3;
+  letter-spacing: 0.1em;
+}
+
+body.mode-glow .artwork-card::after,
+.section-instagram .artwork-card::after {
+  color: #fff;
+}
+
+.artwork-card:hover::after {
+  opacity: 0.6;
+  transform: translateY(0);
+}
+
+/* ============================================
+   ENHANCED NAME ANIMATION
+   ============================================ */
+.name-container {
+  position: relative;
+  text-align: center;
+  perspective: 1000px;
+}
+
+.name-svg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.name-path {
+  fill: none;
+  stroke: var(--ink-color);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 2s ease forwards, pulseLine 3s ease-in-out 2s infinite;
+}
+
+@keyframes drawLine {
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes pulseLine {
+  0%, 100% { stroke-opacity: 1; }
+  50% { stroke-opacity: 0.7; }
+}
+
+.name-text {
+  font-size: clamp(2rem, 8vw, 6rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--ink-color);
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: nameReveal 1s ease 2s forwards;
+}
+
+@keyframes nameReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Ink splatter effect */
+.name-container::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: var(--ink-color);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  animation: inkSplatter 0.6s ease 1.8s forwards;
+}
+
+@keyframes inkSplatter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+/* ============================================
+   SECTION TRANSITIONS
+   ============================================ */
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  transition: background var(--transition-speed);
+}
+
+.section-sketch {
+  background: var(--paper-color);
+}
+
+.section-works,
+.section-instagram,
+.section-contact {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.section-works.visible,
+.section-instagram.visible,
+.section-contact.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   SMOOTH SCROLL BEHAVIOR
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+  scroll snapping if supported
+  scroll-snap-type: y proximity;
+}
+
+.section {
+  scroll-snap-align: start;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink-color);
+  border-radius: 3px;
+  opacity: 0.3;
+}
+
+body.mode-glow ::-webkit-scrollbar-thumb {
+  background: var(--glow-color);
+}
+
+/* ============================================
+   POLAROID HOVER EFFECTS
+   ============================================ */
+.photo-area img {
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+.photo-area img:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* ============================================
+   BUTTON ENHANCEMENTS
+   ============================================ */
+.contact-button {
+  display: inline-block;
+  position: relative;
+  padding: 1.2rem 3.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--ink-color);
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+body.mode-glow .contact-button {
+  color: #fff;
+}
+
+.contact-button:hover {
+  transform: scale(1.05);
+}
+
+.contact-button .button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-button .button-line {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--glow-color);
+  transform: translateX(-50%);
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.contact-button:hover .button-line {
+  width: calc(100% - 7rem);
+}
+
+.contact-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ink-color);
+  opacity: 0;
+  transform: scale(0.9) rotate(-2deg);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+body.mode-glow .contact-button::before {
+  border-color: var(--glow-color);
+}
+
+.contact-button:hover::before {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* ============================================
+   RESPONSIVE IMPROVEMENTS
+   ============================================ */
+@media (max-width: 768px) {
+  .lightbox-nav {
+    font-size: 2.5rem;
+    padding: 10px;
+  }
+  
+  .lightbox-prev { left: 5px; }
+  .lightbox-next { right: 5px; }
+  
+  .lightbox-close {
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+  }
+  
+  .artwork-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .photo-area {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
